@@ -66,6 +66,9 @@ module "route_create_secret" {
   integration_uri                     = "arn:aws:apigateway:us-east-1:lambda:path//2015-03-31/functions/arn:aws:lambda:us-east-1:${var.account_id}:function:${var.app_name}-create-secret/invocations"
   integration_integration_http_method = "POST"
   integration_timeout_milliseconds    = 10000
+  function_name                       = "${var.app_name}-create-secret"
+  execution_arn                       = aws_api_gateway_rest_api.api.execution_arn
+  env                                 = var.env
 }
 
 resource "aws_api_gateway_resource" "owner_resource" {
@@ -84,6 +87,9 @@ module "route_get_secret" {
   integration_uri                     = "arn:aws:apigateway:us-east-1:lambda:path//2015-03-31/functions/arn:aws:lambda:us-east-1:${var.account_id}:function:${var.app_name}-get-secret/invocations"
   integration_integration_http_method = "POST"
   integration_timeout_milliseconds    = 10000
+  function_name                       = "${var.app_name}-get-secret"
+  execution_arn                       = aws_api_gateway_rest_api.api.execution_arn
+  env                                 = var.env
 }
 
 module "route_burn_secret" {
@@ -96,6 +102,9 @@ module "route_burn_secret" {
   integration_uri                     = "arn:aws:apigateway:us-east-1:lambda:path//2015-03-31/functions/arn:aws:lambda:us-east-1:${var.account_id}:function:${var.app_name}-burn-secret/invocations"
   integration_integration_http_method = "POST"
   integration_timeout_milliseconds    = 10000
+  function_name                       = "${var.app_name}-burn-secret"
+  execution_arn                       = aws_api_gateway_rest_api.api.execution_arn
+  env                                 = var.env
 }
 
 module "route_consume_secret" {
@@ -108,4 +117,7 @@ module "route_consume_secret" {
   integration_uri                     = "arn:aws:apigateway:us-east-1:lambda:path//2015-03-31/functions/arn:aws:lambda:us-east-1:${var.account_id}:function:${var.app_name}-consume-secret/invocations"
   integration_integration_http_method = "POST"
   integration_timeout_milliseconds    = 10000
+  function_name                       = "${var.app_name}-consume-secret"
+  execution_arn                       = aws_api_gateway_rest_api.api.execution_arn
+  env                                 = var.env
 }

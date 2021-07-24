@@ -21,3 +21,11 @@ resource "aws_api_gateway_integration" "integration" {
   integration_http_method = var.integration_integration_http_method
   timeout_milliseconds = var.integration_timeout_milliseconds
 }
+
+resource "aws_lambda_permission" "lambda_permission" {
+  statement_id  = "AllowFlashareAPI-${var.function_name}-${var.env}-Invoke"
+  action        = "lambda:InvokeFunction"
+  function_name = var.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn = "${var.execution_arn}/*/*/*"
+}

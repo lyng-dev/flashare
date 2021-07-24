@@ -19,3 +19,9 @@ variable "integration_integration_http_method" {
 variable "integration_timeout_milliseconds" {
     default = 10000
 }
+
+variable "function_name" {}
+
+variable "execution_arn" {}
+
+variable "env" {}
