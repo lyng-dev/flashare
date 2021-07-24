@@ -3,7 +3,7 @@ module "api" {
   env = var.env
   account_id = var.account_id
   region = var.region
-  app-name = var.app-name
+  app_name = var.app_name
 }
 
 module "endpoints" {
@@ -11,5 +11,8 @@ module "endpoints" {
   env = var.env
   account_id = var.account_id
   region = var.region
-  app-name = var.app-name
+  app_name = var.app_name
+
+  # environment variables
+  BUCKET = var.BUCKET
 }
