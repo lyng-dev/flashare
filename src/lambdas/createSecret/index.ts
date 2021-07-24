@@ -1,10 +1,13 @@
 import * as AWS from "aws-sdk";
 import { SendMessageRequest } from "aws-sdk/clients/sqs";
+import { BUCKET } from "../../env";
 import {
   ICreatedSecretResult,
   ICreateSecretEnvelope,
   ISecretContent,
-} from "../types";
+} from "../../types";
+
+const s3 = new AWS.S3();
 
 function randIdOfLength(minL: number, maxL: number) {
   let output = "",
@@ -51,7 +54,7 @@ async function createS3SecretObject(
   try {
     await s3
       .putObject({
-        Bucket: "flasha-dev",
+        Bucket: BUCKET,
         Key: fileName,
         Body: JSON.stringify(secret),
         ContentType: "text/plain",
@@ -81,7 +84,6 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "OPTIONS,POST,GET,DELETE",
 };
 
-const s3 = new AWS.S3();
 export const createSecret = async (event: any, _context: any) => {
   const envelope: ICreateSecretEnvelope = JSON.parse(event.body);
   const content: ISecretContent = envelope.Content;

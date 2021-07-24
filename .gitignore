@@ -1,5 +1,6 @@
 # terraform
 **/.terraform
+**/builds
 
 # dist folder
 dist/
