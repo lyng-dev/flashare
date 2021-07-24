@@ -1,12 +1,7 @@
 import * as AWS from "aws-sdk";
 import { BUCKET } from "../../env";
 import { IBurnedSecretResult } from "../../types";
-
-const corsHeaders = {
-  "content-type": "application/json",
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "OPTIONS,POST,GET,DELETE",
-};
+import { corsHeaders } from "../../corsHeaders";
 
 const s3 = new AWS.S3();
 
