@@ -25,21 +25,15 @@ async function scheduleSecretDeletion(
   console.log(`Scheduling '${keyName}' from delete at: '${expirationDate}'`);
   const sqs = new AWS.SQS({ apiVersion: "2012-11-05" });
   var params: SendMessageRequest = {
-    DelaySeconds: 10,
+    DelaySeconds: 0,
     MessageBody: JSON.stringify({
       keyName: keyName,
       expirationDate: expirationDate.toISOString(),
     }),
-    QueueUrl: `sqs.${AWS_REGION}.amazonaws.com/${AWS_ACCOUNT_ID}/flashare-${ENV}-sqs-queue-delete-secrets.fifo`,
+    QueueUrl: `https://sqs.${AWS_REGION}.amazonaws.com/${AWS_ACCOUNT_ID}/flashare-${ENV}-sqs-queue-delete-secrets`,
   };
 
-  await sqs.sendMessage(params, function (err, data) {
-    if (err) {
-      console.log("Error", err);
-    } else {
-      console.log("Success", data.MessageId);
-    }
-  });
+  await sqs.sendMessage(params).promise();
 
   console.log(`Done scheduling '${keyName}'`);
   return;

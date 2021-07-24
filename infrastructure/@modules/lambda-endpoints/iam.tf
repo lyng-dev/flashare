@@ -30,6 +30,7 @@ resource "aws_iam_role_policy" "s3_rw_policy" {
         Action = [
           "s3:*",
           "sqs:*",
+          "logs:*",
         ]
         Effect   = "Allow"
         Resource = "*"

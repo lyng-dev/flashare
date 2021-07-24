@@ -16,7 +16,9 @@ module "lambda_create_secret" {
   source_path = "../../dist/lambdas/createSecret"
 
   environment_variables = {
+    ENV = var.env
     BUCKET = var.BUCKET
+    AWS_ACCOUNT_ID = var.account_id
   }
 }
 
@@ -38,11 +40,13 @@ module "lambda_consume_secret" {
   source_path = "../../dist/lambdas/consumeSecret"
 
   environment_variables = {
+    ENV = var.env
     BUCKET = var.BUCKET
+    AWS_ACCOUNT_ID = var.account_id
   }
 }
 
-module "lambda_checkSecretsForDeletion" {
+module "lambda_checkScheduledSecretsForDeletion" {
   source = "terraform-aws-modules/lambda/aws"
 
   create_role                       = false
@@ -53,14 +57,16 @@ module "lambda_checkSecretsForDeletion" {
   memory_size = 128 # MB
   timeout = 15 # Seconds
 
-  function_name = "${var.app_name}-checkSecretsForDeletion"
-  handler       = "index.checkSecretsForDeletion"
+  function_name = "${var.app_name}-checkScheduledSecretsForDeletion"
+  handler       = "index.checkScheduledSecretsForDeletion"
   runtime       = "nodejs14.x"
 
-  source_path = "../../dist/lambdas/checkSecretsForDeletion"
+  source_path = "../../dist/lambdas/checkScheduledSecretsForDeletion"
 
   environment_variables = {
+    ENV = var.env
     BUCKET = var.BUCKET
+    AWS_ACCOUNT_ID = var.account_id
   }
 
   event_source_mapping = {
@@ -68,7 +74,7 @@ module "lambda_checkSecretsForDeletion" {
       event_source_arn = aws_sqs_queue.delete-queue.arn
     }
   }
-  
+
   depends_on = [aws_sqs_queue.delete-queue]
 }
 
@@ -90,7 +96,9 @@ module "lambda_burn_secret" {
   source_path = "../../dist/lambdas/burnSecret"
 
   environment_variables = {
+    ENV = var.env
     BUCKET = var.BUCKET
+    AWS_ACCOUNT_ID = var.account_id
   }
 }
 
@@ -112,6 +120,8 @@ module "lambda_get_secret" {
   source_path = "../../dist/lambdas/getSecret"
 
   environment_variables = {
+    ENV = var.env
     BUCKET = var.BUCKET
+    AWS_ACCOUNT_ID = var.account_id
   }
 }

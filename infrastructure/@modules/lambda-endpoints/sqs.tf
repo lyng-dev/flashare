@@ -1,7 +1,5 @@
 resource "aws_sqs_queue" "delete-queue" {
-  name = "${var.app_name}-${var.env}-sqs-queue-delete-secrets.fifo"
-  content_based_deduplication = true
-  fifo_queue = true
+  name = "${var.app_name}-${var.env}-sqs-queue-delete-secrets"
 
   # timings
   visibility_timeout_seconds = 60
