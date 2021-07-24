@@ -30,7 +30,7 @@ async function readS3SecretObject(id: string): Promise<IRequestedSecretResult> {
 
 export const getSecret = async (event: any, _context: any) => {
   const readSecretObjectResult = await readS3SecretObject(
-    event.pathParameters.id
+    event.queryStringParameters.id
   );
 
   return {

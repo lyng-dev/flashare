@@ -16,3 +16,14 @@ module "endpoints" {
   # environment variables
   BUCKET = var.BUCKET
 }
+
+module "s3" {
+  source = "../@modules/s3"
+  env = var.env
+  account_id = var.account_id
+  region = var.region
+  app_name = var.app_name
+
+  # environment variables
+  BUCKET = var.BUCKET
+}

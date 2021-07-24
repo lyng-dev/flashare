@@ -1,6 +1,6 @@
 import * as AWS from "aws-sdk";
 import { SendMessageRequest } from "aws-sdk/clients/sqs";
-import { BUCKET } from "../../env";
+import { BUCKET, AWS_ACCOUNT_ID, AWS_REGION, ENV } from "../../env";
 import {
   ICreatedSecretResult,
   ICreateSecretEnvelope,
@@ -30,7 +30,7 @@ async function scheduleSecretDeletion(
       keyName: keyName,
       expirationDate: expirationDate.toISOString(),
     }),
-    QueueUrl: "",
+    QueueUrl: `sqs.${AWS_REGION}.amazonaws.com/${AWS_ACCOUNT_ID}/flashare-${ENV}-sqs-queue-delete-secrets.fifo`,
   };
 
   await sqs.sendMessage(params, function (err, data) {
@@ -102,10 +102,12 @@ export const createSecret = async (event: any, _context: any) => {
 
   //create secret object
   const expirationDate = currentDatePlusMinutes(expirationMinutes);
+  console.log("Creating new secret");
   const createdSecretObjectResult = await createS3SecretObject(
     content,
     expirationDate
   );
+  console.log("Done, creating");
   const scheduledSecretDeletionResult = await scheduleSecretDeletion(
     createdSecretObjectResult.keyName,
     expirationDate

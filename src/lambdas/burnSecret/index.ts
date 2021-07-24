@@ -25,7 +25,7 @@ async function burnS3SecretObject(id: string): Promise<IBurnedSecretResult> {
 
 export const burnSecret = async (event: any, _context: any) => {
   const burnSecretObjectResult = await burnS3SecretObject(
-    event.pathParameters.id
+    JSON.parse(event.body).id
   );
 
   return {

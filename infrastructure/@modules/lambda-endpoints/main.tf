@@ -62,6 +62,14 @@ module "lambda_checkSecretsForDeletion" {
   environment_variables = {
     BUCKET = var.BUCKET
   }
+
+  event_source_mapping = {
+    sqs = {
+      event_source_arn = aws_sqs_queue.delete-queue.arn
+    }
+  }
+  
+  depends_on = [aws_sqs_queue.delete-queue]
 }
 
 module "lambda_burn_secret" {

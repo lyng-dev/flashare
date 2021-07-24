@@ -35,24 +35,19 @@ async function readS3SecretObject(id: string): Promise<IRequestedSecretResult> {
   } catch (err) {
     throw err;
   }
-  // const notifyEmail = requestedObject.Body.secret.notifyEmail;
-  // delete requestedObject.Body.secret.notifyEmail;
 
   return {
     statusCode: 200,
     secret: requestedObject.Body.toString("utf-8"),
-    //notifyEmail: notifyEmail,
     keyName: id,
   };
 }
 
 export const consumeSecret = async (event: any, context: any) => {
   const requestedSecretResult = await readS3SecretObject(
-    event.pathParameters.id
+    JSON.parse(event.body).id
   );
-  //const notifyEmail = requestedSecretResult.notifyEmail;
   await burnS3SecretObject(requestedSecretResult.keyName);
-  //if (!!notifyEmail) console.log('Would have sent mail to, ', notifyEmail);
 
   return {
     statusCode: requestedSecretResult.statusCode,
