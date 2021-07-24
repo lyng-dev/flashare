@@ -11,7 +11,7 @@ Provides a way to share secrets in a secure way. You can easily configure this t
 5. `yarn build`
 6. Open in your favorite editor
 7. Run setup scripts:
-   `./utilities/setup-env-var.sh`
+   `./utilities/setup-env.sh`
    `./utilities/setup-prepare-aws.sh`
 
 8. Find the `CONFIG:` variables, and replace them with your own
