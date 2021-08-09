@@ -1,4 +1,4 @@
-# flashare (not yet usable)
+# flashare-backend
 
 Provides a way to share secrets in a secure way. You can easily configure this to run in your own AWS infrastructure, and share secrets in a much better and secure way.
 
