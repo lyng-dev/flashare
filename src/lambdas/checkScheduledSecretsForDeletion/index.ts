@@ -24,26 +24,15 @@ async function burnS3SecretObject(id: string): Promise<IBurnedSecretResult> {
 }
 
 export async function checkScheduledSecretsForDeletion(event: SQSEvent) {
-  console.log(`Received: `, event);
   const scheduledDelete: IScheduledDelete = JSON.parse(event.Records[0].body);
-  console.log(`Parsed body as: `, scheduledDelete);
   const parsedSecretToDelete = scheduledDelete.keyName;
   const parsedExpirationDate = Date.parse(scheduledDelete.expirationDate);
-
-  console.log(`Parsed date to: `, parsedExpirationDate);
-
   const now = Date.now();
   const isExpired = parsedExpirationDate < now;
-  console.log(`isExpired: `, isExpired);
-
   if (isExpired) {
-    console.log(`Secret '${parsedSecretToDelete}' has expired. Deleting.`);
     await burnS3SecretObject(parsedSecretToDelete);
     return;
   }
-  console.log(
-    `Secret '${parsedSecretToDelete}' will expire at: ${parsedExpirationDate}'`
-  );
   throw new Error(
     `Secret '${parsedSecretToDelete}' will expire at: ${parsedExpirationDate}'`
   );

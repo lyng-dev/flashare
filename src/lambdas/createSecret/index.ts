@@ -22,7 +22,6 @@ async function scheduleSecretDeletion(
   keyName: string,
   expirationDate: Date
 ): Promise<void> {
-  console.log(`Scheduling '${keyName}' from delete at: '${expirationDate}'`);
   const sqs = new AWS.SQS({ apiVersion: "2012-11-05" });
   var params: SendMessageRequest = {
     DelaySeconds: 0,
@@ -34,8 +33,6 @@ async function scheduleSecretDeletion(
   };
 
   await sqs.sendMessage(params).promise();
-
-  console.log(`Done scheduling '${keyName}'`);
   return;
 }
 
@@ -96,17 +93,14 @@ export const createSecret = async (event: any, _context: any) => {
 
   //create secret object
   const expirationDate = currentDatePlusMinutes(expirationMinutes);
-  console.log("Creating new secret");
   const createdSecretObjectResult = await createS3SecretObject(
     content,
     expirationDate
   );
-  console.log("Done, creating");
   const scheduledSecretDeletionResult = await scheduleSecretDeletion(
     createdSecretObjectResult.keyName,
     expirationDate
   );
-  console.debug(scheduledSecretDeletionResult);
 
   //return result
   return {
