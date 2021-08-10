@@ -17,13 +17,10 @@ async function readS3SecretObject(id: string): Promise<IRequestedSecretResult> {
   } catch (err) {
     throw err;
   }
-  // const notifyEmail = requestedObject.Body.secret.notifyEmail;
-  // delete requestedObject.Body.secret.notifyEmail;
 
   return {
     statusCode: 200,
     secret: requestedObject.Body.toString("utf-8"),
-    //notifyEmail: notifyEmail,
     keyName: id,
   };
 }

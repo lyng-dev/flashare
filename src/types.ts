@@ -11,7 +11,6 @@ export interface ConsumeSecretEnvelope {
 export interface ISecretContent {
   secret: string;
   isPasswordProtected: boolean;
-  //notifyEmail: string;
 }
 
 export interface ICreateSecret {
@@ -27,7 +26,6 @@ export interface ICreatedSecretResult {
 export interface IRequestedSecretResult {
   keyName: string;
   secret: string;
-  //notifyEmail: string;
   statusCode: number;
 }
 
