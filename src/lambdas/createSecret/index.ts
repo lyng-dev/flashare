@@ -26,11 +26,13 @@ async function scheduleSecretDeletion(
   const sqs = new AWS.SQS({ apiVersion: "2012-11-05" });
   var params: SendMessageRequest = {
     DelaySeconds: 0,
+    MessageGroupId: "FLASHARE-${ENV}",
+    MessageDeduplicationId: keyName,
     MessageBody: JSON.stringify({
       keyName: keyName,
       expirationDate: expirationDate.toISOString(),
     }),
-    QueueUrl: `https://sqs.${AWS_REGION}.amazonaws.com/${AWS_ACCOUNT_ID}/flashare-${ENV}-sqs-queue-delete-secrets`,
+    QueueUrl: `https://sqs.${AWS_REGION}.amazonaws.com/${AWS_ACCOUNT_ID}/flashare-${ENV}-delete-secrets.fifo`,
   };
 
   await sqs.sendMessage(params).promise();

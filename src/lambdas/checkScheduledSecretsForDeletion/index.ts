@@ -30,10 +30,11 @@ export async function checkScheduledSecretsForDeletion(event: SQSEvent) {
   const now = Date.now();
   const isExpired = parsedExpirationDate < now;
   if (isExpired) {
+    console.log(`Secret ${parsedSecretToDelete} has expired. Deleting.`);
     await burnS3SecretObject(parsedSecretToDelete);
     return;
   }
   throw new Error(
-    `Secret '${parsedSecretToDelete}' will expire at: ${parsedExpirationDate}'`
+    `Secret '${parsedSecretToDelete}' will expire at: ${scheduledDelete.expirationDate}'`
   );
 }
