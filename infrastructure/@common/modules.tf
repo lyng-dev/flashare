@@ -12,9 +12,7 @@ module "endpoints" {
   account_id = var.account_id
   region = var.region
   app_name = var.app_name
-
-  # environment variables
-  BUCKET = var.BUCKET
+  bucket = var.bucket
 }
 
 module "s3" {
@@ -23,7 +21,5 @@ module "s3" {
   account_id = var.account_id
   region = var.region
   app_name = var.app_name
-
-  # environment variables
-  BUCKET = var.BUCKET
+  bucket = var.bucket
 }

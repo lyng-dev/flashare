@@ -5,5 +5,4 @@ variable "env" {}
 variable "account_id" {}
 variable "region" {}
 
-# environment variables
-variable "BUCKET" {}
+variable "bucket" {}

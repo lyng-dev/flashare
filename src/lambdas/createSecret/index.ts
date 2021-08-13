@@ -1,5 +1,6 @@
 import * as AWS from "aws-sdk";
 import { SendMessageRequest } from "aws-sdk/clients/sqs";
+import { corsHeaders } from "../../corsHeaders";
 import { BUCKET, AWS_ACCOUNT_ID, AWS_REGION, ENV } from "../../env";
 import {
   ICreatedSecretResult,
@@ -68,12 +69,6 @@ function currentDatePlusMinutes(minutes: number): Date {
   let currentDate = new Date();
   return new Date(currentDate.getTime() + minutes * 60000);
 }
-
-const corsHeaders = {
-  "content-type": "application/json",
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "OPTIONS,POST,GET,DELETE",
-};
 
 export const createSecret = async (event: any, _context: any) => {
   const envelope: ICreateSecretEnvelope = JSON.parse(event.body);

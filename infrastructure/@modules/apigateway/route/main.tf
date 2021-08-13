@@ -23,7 +23,7 @@ resource "aws_api_gateway_integration" "integration" {
 }
 
 resource "aws_lambda_permission" "lambda_permission" {
-  statement_id  = "AllowFlashareAPI-${var.function_name}-${var.env}-Invoke"
+  statement_id  = "AllowFlashareAPI-${var.function_name}-Invoke"
   action        = "lambda:InvokeFunction"
   function_name = var.function_name
   principal     = "apigateway.amazonaws.com"

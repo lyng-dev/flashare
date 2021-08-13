@@ -1,7 +1,7 @@
 import * as AWS from "aws-sdk";
+import { corsHeaders } from "../../corsHeaders";
 import { BUCKET } from "../../env";
 import { IBurnedSecretResult, IRequestedSecretResult } from "../../types";
-import { corsHeaders } from "../../corsHeaders";
 
 const s3 = new AWS.S3();
 

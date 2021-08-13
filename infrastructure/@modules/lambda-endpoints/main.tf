@@ -9,7 +9,7 @@ module "lambda_create_secret" {
   memory_size = 128 # MB
   timeout = 15 # Seconds
 
-  function_name = "${var.app_name}-create-secret"
+  function_name = "${var.app_name}-${var.env}-create-secret"
   handler       = "index.createSecret"
   runtime       = "nodejs14.x"
 
@@ -17,7 +17,7 @@ module "lambda_create_secret" {
 
   environment_variables = {
     ENV = var.env
-    BUCKET = var.BUCKET
+    BUCKET = var.bucket
     AWS_ACCOUNT_ID = var.account_id
   }
 }
@@ -33,7 +33,7 @@ module "lambda_consume_secret" {
   memory_size = 128 # MB
   timeout = 15 # Seconds
 
-  function_name = "${var.app_name}-consume-secret"
+  function_name = "${var.app_name}-${var.env}-consume-secret"
   handler       = "index.consumeSecret"
   runtime       = "nodejs14.x"
 
@@ -41,7 +41,7 @@ module "lambda_consume_secret" {
 
   environment_variables = {
     ENV = var.env
-    BUCKET = var.BUCKET
+    BUCKET = var.bucket
     AWS_ACCOUNT_ID = var.account_id
   }
 }
@@ -57,7 +57,7 @@ module "lambda_checkScheduledSecretsForDeletion" {
   memory_size = 128 # MB
   timeout = 15 # Seconds
 
-  function_name = "${var.app_name}-checkScheduledSecretsForDeletion"
+  function_name = "${var.app_name}-${var.env}-checkScheduledSecretsForDeletion"
   handler       = "index.checkScheduledSecretsForDeletion"
   runtime       = "nodejs14.x"
 
@@ -65,7 +65,7 @@ module "lambda_checkScheduledSecretsForDeletion" {
 
   environment_variables = {
     ENV = var.env
-    BUCKET = var.BUCKET
+    BUCKET = var.bucket
     AWS_ACCOUNT_ID = var.account_id
   }
 
@@ -89,7 +89,7 @@ module "lambda_burn_secret" {
   memory_size = 128 # MB
   timeout = 15 # Seconds
 
-  function_name = "${var.app_name}-burn-secret"
+  function_name = "${var.app_name}-${var.env}-burn-secret"
   handler       = "index.burnSecret"
   runtime       = "nodejs14.x"
 
@@ -97,7 +97,7 @@ module "lambda_burn_secret" {
 
   environment_variables = {
     ENV = var.env
-    BUCKET = var.BUCKET
+    BUCKET = var.bucket
     AWS_ACCOUNT_ID = var.account_id
   }
 }
@@ -113,7 +113,7 @@ module "lambda_get_secret" {
   memory_size = 128 # MB
   timeout = 15 # Seconds
 
-  function_name = "${var.app_name}-get-secret"
+  function_name = "${var.app_name}-${var.env}-get-secret"
   handler       = "index.getSecret"
   runtime       = "nodejs14.x"
 
@@ -121,7 +121,7 @@ module "lambda_get_secret" {
 
   environment_variables = {
     ENV = var.env
-    BUCKET = var.BUCKET
+    BUCKET = var.bucket
     AWS_ACCOUNT_ID = var.account_id
   }
 }
