@@ -1,0 +1,31 @@
+.header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0px;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-decoration: none;
+    padding-top: 10px;
+
+    .bi {
+        font-size: 58px;
+    }
+
+    &__text {
+        text-transform: none;
+        letter-spacing: 0.05em;
+        font-weight: bold;
+        font-size: 20px;
+        padding: 4px 0;
+    }
+    &__sub-text {
+        text-align: center;
+        border-top: 1px solid #0a58ca;
+        padding: 5px 10px;
+    }
+}

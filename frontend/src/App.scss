@@ -1,0 +1,139 @@
+:host {
+    max-width: 1280px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.header {
+    margin-bottom: 20px;
+}
+.header,
+.footer {
+    flex: 0 0 auto;
+}
+
+.main {
+    flex: 1 1 auto;
+}
+
+$grid-breakpoints: (
+    xs: 0,
+    sm: 480px,
+    md: 768px,
+    lg: 1024px,
+    xl: 1280px,
+);
+
+@import '~bootstrap/scss/bootstrap';
+
+/* The following line can be included in your src/index.js or App.js file */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+}
+
+.m--max-width-600 {
+    max-width: 600px;
+}
+
+.secret-security-info {
+    text-align: center;
+    color: #000;
+    font-size: 2rem;
+}
+
+.secret-info {
+    color: #333;
+    text-align: left;
+    &__form {
+        textarea {
+            width: 100%;
+        }
+    }
+    &__notifications {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        &-text {
+            font-size: 14px;
+            letter-spacing: -0.035em;
+            padding: 0 10px;
+            ul {
+                padding: 0;
+                margin: 0;
+                list-style: none;
+                li {
+                    display: inline;
+                    margin-left: 5px;
+                    span {
+                        margin-right: 5px;
+                        color: #0d6efd;
+                    }
+                }
+            }
+        }
+        &-warning {
+            font-size: 14px;
+            text-align: center;
+        }
+    }
+
+    &__title {
+        color: #000000;
+        margin-bottom: 9px;
+    }
+
+    &__text {
+        text-align: left;
+        padding: 0.75rem 0.75rem;
+        background: #eee;
+        min-height: 160px;
+        border-radius: 0.25rem;
+
+        pre {
+            font-family: inherit;
+            font-size: 16px;
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+input[type='color'],
+input[type='date'],
+input[type='datetime'],
+input[type='datetime-local'],
+input[type='email'],
+input[type='month'],
+input[type='number'],
+input[type='password'],
+input[type='search'],
+input[type='tel'],
+input[type='text'],
+input[type='time'],
+input[type='url'],
+input[type='week'],
+select,
+select:focus,
+textarea {
+    font-size: 16px !important;
+}
+
+label {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Opera and Firefox */
+}
