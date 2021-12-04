@@ -5,8 +5,8 @@ export const Footer = () => {
         <div className="footer">
             <div>
                 <strong>Want to contribute?&nbsp;</strong>
-                <a href="https://github.com/lyng-dev/flashare-frontend">
-                    https://github.com/lyng-dev/flashare-frontend
+                <a href="https://github.com/lyng-dev/flashare">
+                    https://github.com/lyng-dev/flashare
                 </a>
             </div>
             <div>
