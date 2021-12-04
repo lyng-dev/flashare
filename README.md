@@ -10,4 +10,4 @@ flasha.re is a cloud based secret sharing application.
 
 ## Upcoming Features
 - Create shares from terminal, with flashare-cli
-- Share secret files
+- Share files securely (including images)
