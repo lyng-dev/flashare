@@ -1,27 +1,67 @@
-import {
-  decrypt,
-  decryptWithPassword,
-  encrypt,
-  encryptWithPassword,
-} from "./services/encryption.ts";
-
+//cmd.ts
+import { parse } from "https://deno.land/std/flags/mod.ts"
+import { exists } from "https://deno.land/std/fs/mod.ts"
 import { submitSecret, Values } from './components/CreateSecret/index.ts';
 
-// async function doEncryptionRun() {
-//   const encryptedString:string = await encrypt("Welcome to Denoland", "bananaphone");
-//   const decryptedString:string = await decrypt(encryptedString, "bananaphone");
-//   console.log(decryptedString);
-// }
+type NewCliSecret = {
+  password: string,
+  expire: string,
+  secret: string,
+  file: string,
+}
 
-// doEncryptionRun();
+const denoArgsConfig = {
+  alias: {
+    p: 'password',
+    e: 'expire',
+    s: 'secret',
+    f: 'file'
+  },
+  default: {
+    s: false,
+    f: false,
+    e: '5m',
+    p: false,
+    nopass: false,
+  }
 
-console.log(Deno.args);
+};
+
+const newSecret: any = parse(Deno.args, denoArgsConfig)
+
+//Have we specified a secret of a secret file, otherwise ask
+if (!newSecret.secret && !newSecret.file) {
+  newSecret.secret = newSecret.s = prompt('Please enter your secret: ')
+  if (!newSecret.secret) Deno.exit()
+} else if (newSecret.file && typeof newSecret.file === "string") {
+  //is supplied file valid ?
+  const fileExists = await exists(newSecret.file)
+  if (!fileExists) {
+    console.log(`The specified file '${newSecret.file}' does not exist on this file system. Exiting.`)
+    Deno.exit()
+  } else {
+    //read the file in as the secret
+    newSecret.secret = new TextDecoder().decode(await Deno.readFile(newSecret.file))
+  }
+}
+
+//Have we specified a password, or explicitly said no password, otherwise ask
+if (!newSecret.password && !newSecret.nopass) {
+  newSecret.password = newSecret.p = prompt('Please enter your password: ') ?? false
+}
+console.log(newSecret)
+
+const secret = newSecret.secret;
+const expiration = newSecret.expire;
+const password = newSecret.password;
+const isPasswordProtected = newSecret.password;
 
 const values: Values = {
-  secret: 'hello', 
-  expiration: '5m',
-  password: 'a',
-  isPasswordProtected: true
+  secret, 
+  expiration,
+  password: password ? password : '',
+  isPasswordProtected,
 };
 
 console.log((await submitSecret(values)).toString());
+

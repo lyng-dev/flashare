@@ -1,8 +1,7 @@
 import * as keyService from '../../services/key.ts'
 import * as encryptionService from '../../services/encryption.ts'
-import { ICreateSecretEnvelope } from '../../models/api/index.ts'
 import { convertExpirationChoice, expirationChoices } from '../../services/time-converter.ts'
-import { createSecret } from '../../services/api.ts'
+import { createSecret, ICreateSecretEnvelope } from '../../services/api.ts'
 
 interface Values {
   secret: string
@@ -36,7 +35,9 @@ const submitSecret = async (values: Values) => {
   //     }),
   //     hash: encryptionKey,
   // })
-  return `https://flasha.re/secret/${response.json().then(thing => console.log(thing))}#${encryptionKey}` //used to be: response.data
+  const secret: { keyName: string } = await response.json()
+  console.log(secret.keyName);
+  return `https://flasha.re/secret/${secret.keyName}#${encryptionKey}` //used to be: response.data
 }
 
 export { submitSecret, type Values }

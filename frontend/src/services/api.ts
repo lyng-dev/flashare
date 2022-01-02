@@ -1,4 +1,48 @@
-import { ICreateSecretEnvelope } from '../models/api/index.ts'
+//Secrets
+export interface ICreateSecretEnvelope {
+    Expiration: number
+    Content: ISecretContent
+}
+
+export interface ConsumeSecretEnvelope {
+    Content: ISecretContent
+}
+
+export interface ISecretContent {
+    secret: string
+    isPasswordProtected: boolean
+}
+
+export interface ICreateSecret {
+    secret: string
+    expiration: number
+}
+
+export interface ICreatedSecretResult {
+    keyName: string
+    statusCode: number
+}
+
+export interface IRequestedSecretResult {
+    keyName: string
+    secret: string
+    statusCode: number
+}
+
+export interface IConsumeSecret {
+    keyName: string
+    secret: string
+}
+
+export interface IBurnedSecretResult {
+    keyName: string
+    statusCode: number
+}
+
+export interface IScheduledDelete {
+    keyName: string
+    expirationDate: string
+}
 
 const baseURL = 'https://m5bc6coswg.execute-api.us-east-1.amazonaws.com/dev';
 
@@ -16,8 +60,6 @@ const consumeSecret = async (keyName: string) => {
 
 const createSecret = async (envelope: ICreateSecretEnvelope) => {
     const path = `/secret/create`;
-    console.log(JSON.stringify(envelope))
-    console.log(`${baseURL}${path}`)
     const response = await fetch(`${baseURL}${path}`, {
         method: 'POST',
         body: JSON.stringify(envelope),
@@ -29,7 +71,6 @@ const createSecret = async (envelope: ICreateSecretEnvelope) => {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
     });
-    console.log(await response.json())
     return response;
 }
 

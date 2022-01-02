@@ -1,7 +1,6 @@
-import { ISecretContent } from '../../models/api'
 import { useRef, useState } from 'react'
 import * as encryptionService from '../../services/encryption'
-import { consumeSecret } from '../../services/api'
+import { consumeSecret, ISecretContent } from '../../services/api'
 import { useLocation, useParams } from 'react-router-dom'
 import { useHotkeys } from 'react-hotkeys-hook'
 

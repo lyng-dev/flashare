@@ -1,9 +1,8 @@
 import { convertExpirationChoice, expirationChoices } from '../../services/time-converter'
 import * as keyService from '../../services/key'
 import * as encryptionService from '../../services/encryption'
-import { createSecret } from '../../services/api'
+import { createSecret, ICreateSecretEnvelope } from '../../services/api'
 import { Formik, FormikHelpers, Form, Field, ErrorMessage } from 'formik'
-import { ICreateSecretEnvelope } from '../../models/api'
 import { generatePath, useHistory } from 'react-router-dom'
 import * as Yup from 'yup'
 
