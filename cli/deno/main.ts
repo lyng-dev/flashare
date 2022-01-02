@@ -4,6 +4,7 @@ import { exists } from "https://deno.land/std/fs/mod.ts"
 import { Secret } from "https://deno.land/x/cliffy/prompt/secret.ts";
 import { submitSecret, Values } from './components/CreateSecret/index.ts';
 
+
 type NewCliSecret = {
   password: string,
   expire: string,
@@ -30,14 +31,13 @@ const denoArgsConfig = {
 
 };
 
-const newSecret: any = parse(Deno.args, denoArgsConfig)
-console.log("------------------------------------------")
-console.log("> flasha.re - Cloud based secret sharing <")
-console.log("------------------------------------------")
-                                          
-                                          
+const printTitle = () => {
+  console.log("------------------------------------------")
+  console.log("> flasha.re - Cloud based secret sharing <")
+  console.log("------------------------------------------")
+}
 
-if (newSecret.help) {
+const printUsage = () => {
   console.log('Usage: flashare -h -f <relative_file> -s <secret> -p <password> -e <expiration> --nopass')
   console.log('-h, --help: prints out help')
   console.log('-f, --file <relative file>, if -s is also specified then file takes precedence')
@@ -45,41 +45,48 @@ if (newSecret.help) {
   console.log('-e, --expire <5m|30m|1h|3h|12h|1d|3d|7d> defines expiration')
   console.log('-p, --password <password>, if no value is passed, then user will be asked')
   console.log('--nopass, no password will be set')
-} 
-else {
-  //Have we specified a secret of a secret file, otherwise ask
-  if (!newSecret.secret && !newSecret.file) {
-    newSecret.secret = newSecret.s = await Secret.prompt('Please enter your secret: ')
-    if (!newSecret.secret) Deno.exit()
-  } else if (newSecret.file && typeof newSecret.file === "string") {
-    //is supplied file valid ?
-    const fileExists = await exists(newSecret.file)
-    if (!fileExists) {
-      console.log('FLASHA.RE ERROR >>>>>')
-      console.log(`The specified file '${newSecret.file}' does not exist on this file system.\nExiting.`)
-      Deno.exit()
-    } else {
-      //read the file in as the secret
-      newSecret.secret = new TextDecoder().decode(await Deno.readFile(newSecret.file))
-    }
-  }
-
-  //Have we specified a password, or explicitly said no password, otherwise ask
-  if (!newSecret.password && !newSecret.nopass) {
-    newSecret.password = newSecret.p = await Secret.prompt('Please enter your password: ') ?? false
-  }
-
-  const secret = newSecret.secret;
-  const expiration = newSecret.expire;
-  const password = newSecret.password;
-  const isPasswordProtected = newSecret.password;
-
-  const values: Values = {
-    secret, 
-    expiration,
-    password: password ? password : '',
-    isPasswordProtected,
-  };
-  console.log(`Creating secret link...`)
-  console.log(`\nDone.\n\nShare this link >>>>>>> ${(await submitSecret(values)).toString()}\n`);
+  Deno.exit(0);
 }
+
+printTitle();
+
+const newSecret: any = parse(Deno.args, denoArgsConfig)
+
+//Exit if user has requested Help
+if (newSecret.help) printUsage();
+
+//Have we specified a secret of a secret file, otherwise ask
+if (!newSecret.secret && !newSecret.file) {
+  newSecret.secret = newSecret.s = await Secret.prompt('Please enter your secret: ')
+  if (!newSecret.secret) Deno.exit(0)
+} else if (newSecret.file && typeof newSecret.file === "string") {
+  //is supplied file valid ?
+  const fileExists = await exists(newSecret.file)
+  if (!fileExists) {
+    console.log('FLASHA.RE ERROR >>>>>')
+    console.log(`The specified file '${newSecret.file}' does not exist on this file system.\nExiting.`)
+    Deno.exit(1)
+  } else {
+    //read the file in as the secret
+    newSecret.secret = new TextDecoder().decode(await Deno.readFile(newSecret.file))
+  }
+}
+
+//Have we specified a password, or explicitly said no password, otherwise ask
+if (!newSecret.password && !newSecret.nopass) {
+  newSecret.password = newSecret.p = await Secret.prompt('Enter a password (or leave blank): ') ?? false
+}
+
+const secret = newSecret.secret;
+const expiration = newSecret.expire;
+const password = newSecret.password;
+const isPasswordProtected = newSecret.password;
+
+const values: Values = {
+  secret, 
+  expiration,
+  password: password ? password : '',
+  isPasswordProtected,
+};
+console.log(`Creating secret link...`)
+console.log(`\nDone.\n\nShare this link >>>>>>> ${(await submitSecret(values)).toString()}\n`);
