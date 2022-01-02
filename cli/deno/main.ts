@@ -12,19 +12,20 @@ const args = parseArgs(Deno.args)
 //Exit: if user has requested Help
 if (args.help) printUsage();
 
-//Have we specified a secret of a secret file, otherwise ask
+//If we haven't specified secret based on file or input, then query user for secret
 if (!args.secret && !args.file) {
   args.secret = args.s = await Secret.prompt('Please enter your secret: ')
   if (!args.secret) Deno.exit(0)
 }
+//Otherwise, if we have specified a file
 else if (args.file && typeof args.file === "string") {
-  //is supplied file valid ?
+  //Check if file exists
   const fileExists = await exists(args.file)
-  if (!fileExists) {
+  if (!fileExists) { //And if not, fail
     console.log(`ERROR >>>>> The specified file '${args.file}' does not exist on this file system.\nExiting.`)
     Deno.exit(1)
   } else {
-    //read the file in as the secret
+    //But if it does, then read the file and prepare it for the secret
     args.secret = new TextDecoder().decode(await Deno.readFile(args.file))
   }
 }
@@ -34,16 +35,13 @@ if (!args.password && !args.nopass) {
   args.password = args.p = await Secret.prompt('Enter a password (or leave blank): ') ?? false
 }
 
-const secret = args.secret;
-const expiration = args.expire;
-const password = args.password;
-const isPasswordProtected = args.password;
-
-const values: Values = {
-  secret, 
-  expiration,
-  password: password ? password : '',
-  isPasswordProtected,
+//Build envelope
+const envelopeValues: Values = {
+  secret: args.secret, 
+  expiration: args.expiration,
+  password: args.password ? args.password : '',
+  isPasswordProtected: args.password,
 };
+
 console.log(`Creating secret link...`)
-console.log(`\nDone.\n\nShare this link >>>>>>> ${(await submitSecret(values)).toString()}\n`);
+console.log(`\nDone.\n\nShare this link >>>>>>> ${(await submitSecret(envelopeValues)).toString()}\n`);
