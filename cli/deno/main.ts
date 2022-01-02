@@ -29,6 +29,11 @@ const denoArgsConfig = {
 };
 
 const newSecret: any = parse(Deno.args, denoArgsConfig)
+console.log("------------------------------------------")
+console.log("> flasha.re - Cloud based secret sharing <")
+console.log("------------------------------------------")
+                                          
+                                          
 
 //Have we specified a secret of a secret file, otherwise ask
 if (!newSecret.secret && !newSecret.file) {
@@ -63,6 +68,6 @@ const values: Values = {
   password: password ? password : '',
   isPasswordProtected,
 };
-
-console.log((await submitSecret(values)).toString());
+console.log(`Creating secret link...`)
+console.log(`\nDone.\n\nShare this link >>>>>>> ${(await submitSecret(values)).toString()}\n`);
 

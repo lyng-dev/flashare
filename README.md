@@ -13,7 +13,7 @@
 - Dual random encryption keys.
 - Single Retrieval from Storage
 - Automated Expiration
-- Enable Password Protectection
+- Password Protectection
 - CLI: Create shares from terminal, with flashare-cli
 
 ## Upcoming Features
