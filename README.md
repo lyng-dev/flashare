@@ -1,6 +1,6 @@
 # flasha.re
 
-flasha.re is a cloud based secret sharing application.
+[flasha.re](https://flasha.re) is a cloud based secret sharing application.
 
 ## Features
 - In-browser encryption

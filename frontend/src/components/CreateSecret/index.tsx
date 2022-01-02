@@ -1,7 +1,8 @@
+import { convertExpirationChoice, expirationChoices } from '../../services/time-converter'
 import * as keyService from '../../services/key'
 import * as encryptionService from '../../services/encryption'
 import { createSecret } from '../../services/api'
-import { Formik, FormikHelpers, Form, Field, ErrorMessage, useField } from 'formik'
+import { Formik, FormikHelpers, Form, Field, ErrorMessage } from 'formik'
 import { ICreateSecretEnvelope } from '../../models/api'
 import { generatePath, useHistory } from 'react-router-dom'
 import * as Yup from 'yup'
@@ -12,31 +13,10 @@ const secretSchema = Yup.object().shape({
         .required('You must specify the secret to share'),
 })
 
-const expirationChoices = [
-    { Value: '5m', Title: '5 minutes' },
-    { Value: '30m', Title: '30 minutes' },
-    { Value: '1hr', Title: '1 hour' },
-    { Value: '3hr', Title: '3 hours' },
-    { Value: '12hr', Title: '12 hours' },
-    { Value: '1d', Title: '1 day' },
-    { Value: '3d', Title: '3 days' },
-    { Value: '7d', Title: '1 week' },
-]
-
-const convertExpirationChoice = (choice: string): number => {
-    if (choice === '5m') return 5
-    else if (choice === '30m') return 30
-    else if (choice === '1hr') return 60
-    else if (choice === '3hr') return 180
-    else if (choice === '12hr') return 720
-    else if (choice === '1d') return 1440
-    else if (choice === '3d') return 4320
-    else return 10080
-}
-
 interface Props {
     showSpinner: Function
 }
+
 interface Values {
     secret: string
     expiration: string
@@ -73,10 +53,11 @@ export const CreateSecret = ({ showSpinner }: Props) => {
 
         //send envelope
         const response = await createSecret(envelope)
+        const createdSecret = await response.json()
         showSpinner(false)
         history.push({
             pathname: generatePath('/secret/owner/:keyName', {
-                keyName: response.data.keyName,
+                keyName: createdSecret.keyName,
             }),
             hash: encryptionKey,
         })

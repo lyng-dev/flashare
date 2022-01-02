@@ -43,7 +43,7 @@ export const ConsumeSecret = ({ showSpinner }: Props) => {
     const handleConsumeSecret = async () => {
         showSpinner(true)
         const response = await consumeSecret(keyName)
-        const consumedSecret = response.data
+        const consumedSecret = await response.json()
         const secretContent: ISecretContent = JSON.parse(consumedSecret.secret)
         if (secretContent.isPasswordProtected) {
             setPasswordProtectedSecret(secretContent.secret)
