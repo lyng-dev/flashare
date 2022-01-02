@@ -8,6 +8,10 @@
 - MacOS (x86_64 + Aarch) Terminals
 - Linux (x86_64) Terminals
 
+### CLI installation
+Windows/Chocolatey: `choco install flashare --pre`
+
+
 ## Features
 - Client-side encryption. No data is ever sent unencrypted.
 - Dual random encryption keys.
