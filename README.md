@@ -9,7 +9,7 @@
 - Linux (x86_64) Terminals
 
 ### CLI installation
-Windows/Chocolatey: `choco install flashare --pre`
+Windows/Chocolatey (Beta): `choco install flashare --pre`
 
 
 ## Features
