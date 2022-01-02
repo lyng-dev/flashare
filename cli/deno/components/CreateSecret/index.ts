@@ -27,16 +27,8 @@ const submitSecret = async (values: Values) => {
   }
 
   //send envelope
-  console.log(envelope)
   const response: Response = await createSecret(envelope)
-  // history.push({
-  //     pathname: generatePath('/secret/owner/:keyName', {
-  //         keyName: response.data.keyName,
-  //     }),
-  //     hash: encryptionKey,
-  // })
   const secret: { keyName: string } = await response.json()
-  console.log(secret.keyName);
   return `https://flasha.re/secret/${secret.keyName}#${encryptionKey}` //used to be: response.data
 }
 

@@ -13,7 +13,7 @@ declare -a architectures=("x86_64-unknown-linux-gnu" "x86_64-pc-windows-msvc" "x
 for i in "${architectures[@]}"
 do
    mkdir -p ../output/"$i"
-   deno compile --allow-net --allow-read --allow-write --target "$i" --output ../output/"$i"/flashare main.ts
+   deno compile --allow-net --allow-read --allow-write --unstable --target "$i" --output ../output/"$i"/flashare main.ts
 done
 
 
