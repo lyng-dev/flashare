@@ -1,12 +1,13 @@
 import React, { useRef, useState } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { destroySecret } from '../../services/api'
+import { IKeyNameParams } from '../types'
 interface Props {
     showSpinner: Function
 }
 
 export const SecretDestroy = ({ showSpinner }: Props) => {
-    const { keyName }: { keyName: string } = useParams()
+    const { keyName } = useParams<IKeyNameParams>()
     const confirmKeyRef: React.Ref<HTMLInputElement> = useRef(null)
     const [destroyed, setDestroyed] = useState(false)
     const hash = useLocation().hash
@@ -15,7 +16,7 @@ export const SecretDestroy = ({ showSpinner }: Props) => {
     const handleDestroyClick = async () => {
         showSpinner(true)
         if (confirmKeyRef.current?.value === keyAndHash) {
-            await destroySecret(keyName)
+            if (keyName) await destroySecret(keyName)
             setDestroyed(true)
         }
         showSpinner(false)

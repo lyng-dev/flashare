@@ -3,7 +3,7 @@ import * as keyService from '../../services/key'
 import * as encryptionService from '../../services/encryption'
 import { createSecret, ICreateSecretEnvelope } from '../../services/api'
 import { Formik, FormikHelpers, Form, Field, ErrorMessage } from 'formik'
-import { generatePath, useHistory } from 'react-router-dom'
+import { generatePath, useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 
 const secretSchema = Yup.object().shape({
@@ -24,7 +24,7 @@ interface Values {
 }
 
 export const CreateSecret = ({ showSpinner }: Props) => {
-    const history = useHistory()
+    const navigate = useNavigate()
 
     const initialValues: Values = {
         secret: '',
@@ -54,12 +54,7 @@ export const CreateSecret = ({ showSpinner }: Props) => {
         const response = await createSecret(envelope)
         const createdSecret = await response.json()
         showSpinner(false)
-        history.push({
-            pathname: generatePath('/secret/owner/:keyName', {
-                keyName: createdSecret.keyName,
-            }),
-            hash: encryptionKey,
-        })
+        navigate(`/secret/owner/${createdSecret.keyName}#${encryptionKey}`, { replace: true })
         return <></>
     }
 

@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { IKeyNameParams } from '../types'
 
 const copyButtonDefaultText = 'Copy to clipboard'
 
@@ -12,7 +13,7 @@ export const SecretCreated = () => {
     let isCopied = false
 
     const location = useLocation()
-    const { keyName }: { keyName: string } = useParams()
+    const { keyName } = useParams<IKeyNameParams>()
 
     const handleCopy = () => {
         secretUrlRef.current?.select()

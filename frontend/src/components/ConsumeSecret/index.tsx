@@ -3,6 +3,7 @@ import * as encryptionService from '../../services/encryption'
 import { consumeSecret, ISecretContent } from '../../services/api'
 import { useLocation, useParams } from 'react-router-dom'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { IKeyNameParams } from '../types'
 
 const copyButtonDefaultText = 'Copy to clipboard'
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
 }
 
 export const ConsumeSecret = ({ showSpinner }: Props) => {
-    const { keyName }: { keyName: string } = useParams()
+    const { keyName } = useParams<IKeyNameParams>()
     const hash = useLocation().hash.replace('#', '')
     const copyButtonRef: React.Ref<HTMLButtonElement> = useRef(null)
     const [isConsumed, setIsConsumed] = useState(false)
@@ -41,7 +42,8 @@ export const ConsumeSecret = ({ showSpinner }: Props) => {
 
     const handleConsumeSecret = async () => {
         showSpinner(true)
-        const response = await consumeSecret(keyName)
+
+        const response = await consumeSecret(keyName!)
         const consumedSecret = await response.json()
         const secretContent: ISecretContent = JSON.parse(consumedSecret.secret)
         if (secretContent.isPasswordProtected) {
