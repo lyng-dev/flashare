@@ -35,7 +35,7 @@ module "lambda_consume_secret" {
 
   function_name = "${var.app_name}-${var.env}-consume-secret"
   handler       = "index.consumeSecret"
-  runtime       = "nodejs14.x"
+  runtime       = "nodejs20.x"
 
   source_path = "../../dist/lambdas/consumeSecret"
 
@@ -59,7 +59,7 @@ module "lambda_checkScheduledSecretsForDeletion" {
 
   function_name = "${var.app_name}-${var.env}-checkScheduledSecretsForDeletion"
   handler       = "index.checkScheduledSecretsForDeletion"
-  runtime       = "nodejs14.x"
+  runtime       = "nodejs20.x"
 
   source_path = "../../dist/lambdas/checkScheduledSecretsForDeletion"
 
@@ -91,7 +91,7 @@ module "lambda_burn_secret" {
 
   function_name = "${var.app_name}-${var.env}-burn-secret"
   handler       = "index.burnSecret"
-  runtime       = "nodejs14.x"
+  runtime       = "nodejs20.x"
 
   source_path = "../../dist/lambdas/burnSecret"
 
@@ -115,7 +115,7 @@ module "lambda_get_secret" {
 
   function_name = "${var.app_name}-${var.env}-get-secret"
   handler       = "index.getSecret"
-  runtime       = "nodejs14.x"
+  runtime       = "nodejs20.x"
 
   source_path = "../../dist/lambdas/getSecret"
 

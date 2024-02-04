@@ -52,13 +52,13 @@ export const SecretCreated = () => {
                 </pre>
 
                 <div className="secret-info__buttons">
-                    <div className="secret-info__buttons-left">
-                        <Link
+                    <div className="secret-info__buttons-left">&nbsp;
+                        {/* <Link
                             to={`/secret/owner/destroy/${keyName}${location.hash}`}
                             className="fs-5 btn text-danger btn-link secret-info__btn-secret-del"
                         >
                             Destroy secret
-                        </Link>
+                        </Link> */}
                     </div>
                     <div className="secret-info__buttons-right">
                         <div className="copyText">

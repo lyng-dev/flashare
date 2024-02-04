@@ -37,12 +37,6 @@ module "route_create_secret" {
   env                                 = var.env
 }
 
-resource "aws_api_gateway_resource" "owner_resource" {
-  path_part   = "owner"
-  parent_id   = aws_api_gateway_resource.secret_resource.id
-  rest_api_id = aws_api_gateway_rest_api.api.id
-}
-
 module "route_get_secret" {
   source                              = "./route"
   rest_api_id                         = aws_api_gateway_rest_api.api.id
@@ -58,11 +52,23 @@ module "route_get_secret" {
   env                                 = var.env
 }
 
+resource "aws_api_gateway_resource" "owner_resource" {
+  path_part   = "owner"
+  parent_id   = aws_api_gateway_resource.secret_resource.id
+  rest_api_id = aws_api_gateway_rest_api.api.id
+}
+
+resource "aws_api_gateway_resource" "burnsecret_resource" {
+  path_part   = "burnsecret"
+  parent_id   = aws_api_gateway_resource.owner_resource.id
+  rest_api_id = aws_api_gateway_rest_api.api.id
+}
+
 module "route_burn_secret" {
   source                              = "./route"
   rest_api_id                         = aws_api_gateway_rest_api.api.id
-  resource_parent_id                  = aws_api_gateway_resource.owner_resource.id
-  resource_path_part                  = "burnsecret"
+  resource_parent_id                  = aws_api_gateway_resource.burnsecret_resource.id
+  resource_path_part                  = "{id+}"
   method_http_method                  = "DELETE"
   integration_type                    = "AWS_PROXY"
   integration_uri                     = "arn:aws:apigateway:us-east-1:lambda:path//2015-03-31/functions/arn:aws:lambda:us-east-1:${var.account_id}:function:${var.app_name}-${var.env}-burn-secret/invocations"
