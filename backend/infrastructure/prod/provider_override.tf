@@ -1,14 +1,10 @@
 terraform {
   backend "s3" {
-    bucket = "flashare-tfstate-prod" # CONFIG: Replace, Must be globally unique
-                                    # CONFIG: Must be created manually
-                                    # CONFIG: Create using ./setup-prepare-aws.sh
-    dynamodb_table = "flashare-tfstate-lock" # CONFIG: Must be created manually
-                                             # CONFIG: Create using ./setup-prepare-aws.sh
+    bucket = "flashare-tfstate-prod"
+    dynamodb_table = "flashare-tfstate-lock"
     encrypt = true
-    region = "us-east-1" # CONFIG: Replace, if you want it located elsewhere
+    region = "us-east-1"
   }
-  required_version = "1.0.4"
 }
 
 provider "aws" {

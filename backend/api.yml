@@ -1,0 +1,28 @@
+openapi: 3.0.3
+info:
+  title: flashare Backend
+  description: |-
+  contact:
+    email: sm@lyng.dev
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: "1.0.0-20240201"
+servers:
+  - url: https://flasha.re
+
+paths:
+  /secret/create:
+    post:
+      requestBody:
+      responses:
+        '200':
+
+components:
+
+  schemas:
+    
+
+        
+
+      

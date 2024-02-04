@@ -44,7 +44,7 @@ export interface IScheduledDelete {
     expirationDate: string
 }
 
-const baseURL = 'https://m5bc6coswg.execute-api.us-east-1.amazonaws.com/dev';
+const baseURL = 'https://c01ct1co92.execute-api.us-east-1.amazonaws.com/dev';
 
 const consumeSecret = async (keyName: string) => { 
     const path = `/secret/consumesecret`;
